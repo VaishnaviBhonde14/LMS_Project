@@ -1,0 +1,516 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  
+    .hero-section {
+        position: relative;
+        background: url('/static/images/hero_img.jpg') center top/cover no-repeat;
+        padding: 90px 0;
+        min-height: 600px;
+        color: #222;
+        overflow: hidden;
+        width: 99.5vw;
+        margin-left: calc(-50vw + 50%);
+     
+    }
+
+    .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+
+        /* Responsive left shadow */
+        width: 90%;
+        background: linear-gradient(to right, white, transparent);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .hero-section>* {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-highlight {
+        color: #1b8a4e;
+    }
+
+
+    .custom-card,
+    .custom-form {
+        border-radius: 18px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, .09);
+    }
+
+    .custom-form {
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .btn-success,
+    .bg-success {
+        background: #1b8a4e !important;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background: #166e3f !important;
+    }
+
+    .custom-footer {
+        background: #111;
+        color: #fff;
+        border-top-left-radius: 42px;
+        border-top-right-radius: 42px;
+    }
+
+    .custom-footer .card {
+        background: #111;
+        color: #fff;
+        border: none;
+    }
+
+    .blog-section h2 span,
+    .testimonial-section h2 span {
+        color: #1b8a4e;
+    }
+
+    .section-divider {
+        border-bottom: 3px solid #1b8a4e;
+        width: 50px;
+        margin: 12px auto 24px auto;
+    }
+
+    .blog-card img {
+        min-height: 80px;
+    }
+
+    @media (max-width: 992px) {
+        .hero-section {
+            border-radius: 0;
+            min-height: 320px;
+        }
+
+        .custom-footer {
+            border-radius: 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-section {
+            padding: 30px 0;
+        }
+
+        .custom-form {
+            padding: 12px;
+        }
+    }
+
+    .hero-row {
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .hero-section .row {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .hero-text h1 {
+        font-size: 2.8rem;
+        font-weight: 600;
+        margin-left: 10%;
+
+    }
+
+    .hero-text h1 span {
+        color: #28a745;
+
+    }
+
+    .hero-text p {
+        font-size: 1.2rem;
+        margin-top: 10px;
+        margin-left: 10%;
+    }
+
+    .hero-text .btn {
+        margin-top: 20px;
+        padding: 10px 30px;
+        font-size: 1.1rem;
+        margin-left: 10%;
+    }
+
+    /* Hero Form */
+    .hero-form {
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+    }
+
+    .hero-form h3 {
+        font-weight: 600;
+    }
+
+    .hero-form .form-control {
+        margin-bottom: 12px;
+        border-radius: 5px;
+    }
+
+    .hero-btn {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .hero-btn:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+
+    /* Mobile country code dropdown */
+    .mobile-wrapper {
+        display: flex;
+        gap: 5px;
+    }
+
+    .mobile-input {
+        flex: 1;
+        border: none;
+        padding: 12px;
+        padding-bottom: 12px;
+        /* background: #dfe0e1; */
+        outline: none;
+        font-size: 15px;
+
+        box-sizing: border-box;
+        border: solid 1px rgb(187, 178, 178);
+    }
+
+    /* Make dropdown and input same height */
+    .country-dropdown,
+    .mobile-input {
+        height: 45px !important;
+        padding: 10px !important;
+        display: flex;
+        align-items: center;
+    }
+
+    .country-dropdown {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ccc;
+        padding: 5px 8px;
+        border-radius: 5px;
+        cursor: pointer;
+        background: #f8f9fa;
+    }
+
+
+    .country-dropdown img.flag-icon {
+        width: 18px;
+        margin-right: 5px;
+        height: 18px;
+        object-fit: cover;
+    }
+
+    .dropdown-list {
+        display: none;
+        position: absolute;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-top: 5px;
+        z-index: 100;
+    }
+
+    .dropdown-item {
+        padding: 5px 10px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+        background: #f1f1f1;
+    }
+
+
+    .dropdown-list.show {
+        display: block !important;
+    }
+</style>
+
+
+
+<!-- Hero section -->
+<div class="hero-section">
+    <div class="container ">
+       
+        <div class="row align-items-center hero-row">
+
+            <!-- LEFT TEXT -->
+            <div class="col-md-6 text-black hero-text">
+                <p class="lh-1">Crafted for Curious Minds</p>
+                <h1>
+                    Explore <span>ITPRENEUR</span>
+                </h1>
+                <p>Turning curiosity into clarity, the fastest track to grow your IT career.</p>
+                <a href="{% url 'accounts:register' %}" class="btn btn-success btn-lg mt-3 mb-4">Get Started</a>
+            </div>
+
+            <!-- RIGHT FORM -->
+            <div class="col-md-6 d-flex justify-content-center">
+                <form class="hero-form p-4 bg-white rounded shadow-lg">
+                    <h3 class="text-center mb-3">Get in touch</h3>
+
+                    <label class="form-label">Your Name <span style="color:red">*</span></label>
+                    <input type="text" class="form-control mb-2  hero-input" placeholder="Your Name *">
+
+                    <label class="form-label">Your Email <span style="color:red">*</span></label>
+                    <input type="email" class="form-control mb-2 hero-input" placeholder="Your Email *">
+
+                    <label class="form-label ">Your Mobile Number <span style="color:red">*</span></label>
+                    <div class="mobile-wrapper mb-3">
+
+                        <!-- Country Code Dropdown -->
+                        <div class="country-dropdown" onclick="toggleDropdown()">
+                            <img id="selected-flag" src="/static/images/india_img.webp" class="flag-icon">
+                            <span id="selected-code">+91</span>
+                            <span class="arrow">▾</span>
+
+                            <!-- Dropdown List -->
+                            <div class="dropdown-list" id="dropdown-list">
+                                <div class="dropdown-item"
+                                    onclick="selectCountry('/static/images/india_flag.png', '+91')">
+                                    <img src="/static/images/india_img.webp" class="flag-icon"> +91 India
+                                </div>
+
+                                <div class="dropdown-item" onclick="selectCountry('/static/images/us_flag.png', '+1')">
+                                    <img src="/static/images/usa_img.png" class="flag-icon"> +1 USA
+                                </div>
+
+                                <div class="dropdown-item" onclick="selectCountry('/static/images/uk_flag.png', '+44')">
+                                    <img src="/static/images/uk_img.webp" class="flag-icon"> +44 UK
+                                </div>
+                            </div>
+
+                        </div>
+                        <input type="text" class="form-control mb-2 mobile-input"
+                            placeholder="Your Mobile Number *"><br>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 mt-2 hero-btn">Submit Enquiry</button>
+                </form>
+            </div>
+
+        </div>
+        <!-- </div> -->
+    </div>
+</div>
+
+
+
+
+
+<!-- Courses Section -->
+<div class="container my-5 text-center">
+    <h2>Popular IT Courses</h2>
+    <div class="section-divider"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-3 mb-4">
+            <div class="card custom-card h-100">
+                <img src="https://nrichbuckets.objectstore.e2enetworks.net/95mpiboienhw/no8HcroppedImage.png"
+                    class="card-img-top" alt="Full Stack Java Development">
+                <div class="card-body">
+                    <h5 class="card-title">Full Stack Java Development</h5>
+                    <p class="card-text">Learn building robust Java applications.</p>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'student:course_detail' 1 %}" class="btn btn-success">Know More</a>
+                    {% else %}
+                    <a href="{% url 'accounts:register' %}?next={% url 'student:course_detail' 1 %}"
+                        class="btn btn-success">Know More</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card custom-card h-100">
+                <img src="https://nrichbuckets.objectstore.e2enetworks.net/95mpiboienhw/fEbKcroppedImage.jpg"
+                    class="card-img-top" alt="Full Stack Dot Net Development">
+                <div class="card-body">
+                    <h5 class="card-title">Full Stack Dot Net Development</h5>
+                    <p class="card-text">Master .NET for enterprise projects.</p>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'student:course_detail' 2 %}" class="btn btn-success">Know More</a>
+                    {% else %}
+                    <a href="{% url 'accounts:register' %}?next={% url 'student:course_detail' 2 %}"
+                        class="btn btn-success">Know More</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card custom-card h-100">
+                <img src="https://nrichbuckets.objectstore.e2enetworks.net/95mpiboienhw/jcnmcroppedImage.png"
+                    class="card-img-top" alt="Data Analytics And Business Analytics">
+                <div class="card-body">
+                    <h5 class="card-title">Data Analytics And Business Analytics</h5>
+                    <p class="card-text">Comprehensive data analytics and BI with AI modules.</p>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'student:course_detail' 3 %}" class="btn btn-success">Know More</a>
+                    {% else %}
+                    <a href="{% url 'accounts:register' %}?next={% url 'student:course_detail' 3 %}"
+                        class="btn btn-success">Know More</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card custom-card h-100">
+                <img src="https://nrichbuckets.objectstore.e2enetworks.net/95mpiboienhw/a7tzcroppedImage.png"
+                    class="card-img-top" alt="Python Web Dev & Data Science">
+                <div class="card-body">
+                    <h5 class="card-title">Python Web Dev & Data Science</h5>
+                    <p class="card-text">Become a pro in Python web, analytics, and ML.</p>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'student:course_detail' 4 %}" class="btn btn-success">Know More</a>
+                    {% else %}
+                    <a href="{% url 'accounts:register' %}?next={% url 'student:course_detail' 4 %}"
+                        class="btn btn-success">Know More</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="container my-5 testimonial-section text-center">
+    <h2>Check out what our <span>Students say about us!</span></h2>
+    <div class="section-divider"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-3 mb-4">
+            <div class="card custom-card h-100">
+                <img src="https://nrichvideos.objectstore.e2enetworks.net/9iK9WhatsAppImage2025-09-24at12.42.13PM(1).jpeg"
+                    class="card-img-top" alt="Tithi Suryawanshi">
+                <div class="card-body">
+                    <h5 class="card-title">Tithi Suryawanshi</h5>
+                    <p><b>Placed at 5.5 LPA</b></p>
+                    <p class="card-text">Highly recommended for learning and career growth.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card custom-card h-100">
+                <img src="https://nrichvideos.objectstore.e2enetworks.net/sWABWhatsAppImage2025-09-24at12.38.28PM(4).jpeg"
+                    class="card-img-top" alt="Ashwini Chavare">
+                <div class="card-body">
+                    <h5 class="card-title">Ashwini Chavare</h5>
+                    <p><b>Secured as HR Executive at 4.5 LPA</b></p>
+                    <p class="card-text">Excellent support and training at ITPRENEUR.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card custom-card h-100">
+                <img src="https://nrichvideos.objectstore.e2enetworks.net/LBgWWhatsAppImage2025-09-24at12.38.29PM.jpeg"
+                    class="card-img-top" alt="Ritesh Ahire">
+                <div class="card-body">
+                    <h5 class="card-title">Ritesh Ahire</h5>
+                    <p><b>Placed as Full Stack Developer at 6 LPA</b></p>
+                    <p class="card-text">Great mentors, real projects, and placements guaranteed!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer Section / Contact / Map -->
+<div class="container-fluid py-5 custom-footer border">
+    <div class="card mx-auto " style="max-width:1200px;">
+        <div class="card-body ">
+            <div class="row">
+                <div class="col-md-7 mb-4 mb-md-0">
+                    <h3 class="mb-3">Head Office</h3>
+                    <p>
+                        <i class="fa fa-map-marker-alt mr-2"></i>
+                        iTpreneur, 2nd, 3rd Floor, Parthiv, 1264/J,<br>
+                        Wrangler Paranjape Road, Jangali Maharaj Rd, above TJSB Bank, Deccan Gymkhana,<br>
+                        Pune, Maharashtra 411004
+                    </p>
+                    <h4 class="mt-4 mb-3">Support Enquiries</h4>
+                    <p><i class="fa fa-envelope mr-2"></i>
+                        <a href="mailto:vinayak.p@itpreneurpune.com" class="text-white">vinayak.p@itpreneurpune.com</a>
+                    </p>
+                    <p><i class="fa fa-phone mr-2"></i>9766593275</p>
+                </div>
+                <div class="col-md-5">
+                    <div class="rounded overflow-hidden border border-2" style="border-color:#222 !important;">
+                        <iframe src="https://www.google.com/maps?q=18.5197222,73.8452778&hl=es;z=14&amp;output=embed"
+                            width="100%" height="270" frameborder="0" style="border:0;" allowfullscreen=""
+                            aria-hidden="false" tabindex="0">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Blog/Insight Hub Section -->
+<div class="container mt-5 mb-5 text-center blog-section">
+    <h2>Your Insight Hub!<br><span>Explore our Blogs</span></h2>
+    <div class="section-divider"></div>
+    <p class="lead">Explore ITPRENEUR's collection of insightful blogs, covering expert tips, learning strategies, and
+        industry trends.</p>
+    <div class="row justify-content-center">
+        <!-- Repeat for however many blog cards you need -->
+        <div class="col-md-3 mb-4">
+            <div class="card custom-card blog-card h-100">
+                <img src="https://nrichvideos.objectstore.e2enetworks.net/7c6Wundefined" class="card-img-top"
+                    alt="A recruiting guide">
+                <div class="card-body">
+                    <h5 class="card-title">Get Hired Right: A Recruiting Guide</h5>
+                    <p class="card-text">Master the IT hiring process, certification tips, and more.</p>
+                    <span class="small text-muted">Author: Vinayak Patil</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card custom-card blog-card h-100">
+                <img src="https://nrichvideos.objectstore.e2enetworks.net/pJ62undefined" class="card-img-top"
+                    alt="Empowering Developers">
+                <div class="card-body">
+                    <h5 class="card-title">Empowering Future Developers</h5>
+                    <p class="card-text">Pro tips and motivation for modern tech careers.</p>
+                    <span class="small text-muted">Author: Vinayak Patil</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card custom-card blog-card h-100">
+                <img src="https://nrichvideos.objectstore.e2enetworks.net/4ZBnundefined" class="card-img-top"
+                    alt="Empowering Cloud Professionals">
+                <div class="card-body">
+                    <h5 class="card-title">Cracking IT Careers</h5>
+                    <p class="card-text">Why Aptitude Matters More Than You Think?</p>
+                    <span class="small text-muted">Author: Vinayak Patil</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'accounts:blog' %}" class="btn btn-light border mt-2">View all &rarr;</a>
+</div>
+
+
+
+
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}
